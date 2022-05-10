@@ -3,7 +3,7 @@ import { useState } from "react";
 
 function TextInput({ handler }) {
   const [textInput, setTextInput] = useState("");
-  const handleClick = () => {
+  const handleSubmit = () => {
     handler({ text: textInput });
     setTextInput("");
   };
@@ -14,10 +14,11 @@ function TextInput({ handler }) {
         type="text"
         name="textInput"
         value={textInput}
+        onSubmit={handleSubmit}
         onChange={(e) => setTextInput(e.target.value)}
         placeholder="Type your todo"
       ></input>
-      <button onClick={handleClick}>Create ToDo</button>
+      <button onClick={handleSubmit}>Create ToDo</button>
     </>
   );
 }
