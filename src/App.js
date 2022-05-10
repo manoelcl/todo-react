@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import TextInput from "./components/TextInput";
+import TodoList from "./components/TodoList";
+import { useState } from "react";
 
 function App() {
+  const [todoElements, setTodo] = useState([]);
+
+  const deleteTodo = (index) => {
+    todoElements.splice(index, 1);
+    console.log(index);
+    setTodo([...todoElements]);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TextInput handler={({ text }) => setTodo([...todoElements, text])} />
+      <TodoList todoList={todoElements} todoHandler={deleteTodo} />
     </div>
   );
 }
