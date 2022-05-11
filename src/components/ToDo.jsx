@@ -1,9 +1,15 @@
 import PropTypes from "prop-types";
-function ToDo({ name, keyName, handler }) {
+import Menu from "./Menu";
+function ToDo({ name, keyName, colors, currentColor, handler, colorHandler }) {
   const handleClickEvent = () => handler(keyName);
   return (
-    <div className="todo">
-      <div className="menu1"></div>
+    <div className={`todo bg-${colors[currentColor]}`}>
+      <Menu
+        elements={colors}
+        keyName={keyName}
+        name="📝"
+        colorHandler={colorHandler}
+      ></Menu>
       <div className="text-content">{name}</div>
       <button className="check" onClick={handleClickEvent}>
         ✔
@@ -15,7 +21,9 @@ function ToDo({ name, keyName, handler }) {
 ToDo.PropType = {
   name: PropTypes.string.isRequired,
   keyName: PropTypes.string,
+  colors: PropTypes.arrayOf(PropTypes.string),
   handler: PropTypes.func.isRequired,
+  colorHandler: PropTypes.func,
 };
 
 export default ToDo;
