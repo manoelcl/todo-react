@@ -1,19 +1,51 @@
 import PropTypes from "prop-types";
+import { useState } from "react";
 import Menu from "./Menu";
-function ToDo({ name, keyName, colors, currentColor, handler, colorHandler }) {
-  const handleClickEvent = () => handler(keyName);
+import TextInput from "./TextInput";
+function ToDo({
+  name,
+  keyName,
+  colors,
+  currentColor,
+  handler,
+  colorHandler,
+  textHandler,
+}) {
+  const [editMode, setEditMode] = useState(false);
+  const handleCheckEvent = () => handler(keyName);
+  const handleEditEvent = () => setEditMode(!editMode);
+  const handleTextEditEvent = ({ text }) => {
+    textHandler(keyName, text);
+    handleEditEvent();
+  };
   return (
-    <div className={`todo bg-${colors[currentColor]}`}>
+    <div className={`todo bg-${colors[currentColor]} t${keyName}`}>
+      <button onClick={handleEditEvent}>📝</button>
       <Menu
         elements={colors}
         keyName={keyName}
-        name="📝"
+        name=""
         colorHandler={colorHandler}
       ></Menu>
-      <div className="text-content">{name}</div>
-      <button className="check" onClick={handleClickEvent}>
-        ✔
-      </button>
+      {!editMode ? (
+        <div className="text-content">{name}</div>
+      ) : (
+        <div className="text-content">
+          <TextInput
+            buttonText="✔️"
+            initialValue={name}
+            className="text-content"
+            handler={handleTextEditEvent}
+          />
+        </div>
+      )}
+      {!editMode ? (
+        <button className="check" onClick={handleCheckEvent}>
+          🗑️
+        </button>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

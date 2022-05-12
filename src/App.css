@@ -1,5 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
 
+:root {
+  /* Post-it colors */
+  --yellow: yellow;
+  --blue: aquamarine;
+  --orange: darkorange;
+  --red: tomato;
+  --green: yellowgreen;
+  /* Shadow */
+  --shadow: black;
+  /* BG-gradient */
+  --gradient1: rgb(34, 51, 34);
+  --gradient2: rgb(98, 119, 98);
+  --gradient3: rgb(159, 184, 159);
+  /* Main background */
+}
+
 * {
   text-align: center;
   box-sizing: border-box;
@@ -44,11 +60,11 @@ footer a:hover {
   align-items: center;
   min-height: 100vh;
   margin: 0 auto;
-  background-color: rgb(34, 51, 34);
+  background-color: var(--gradient1);
   background-image: radial-gradient(
-    rgb(34, 51, 34),
-    rgb(98, 119, 98) 85%,
-    rgb(159, 184, 159)
+    var(--gradient1),
+    var(--gradient2) 85%,
+    var(--gradient3)
   );
   max-width: 800px;
   border-radius: 1rem;
@@ -63,17 +79,18 @@ footer a:hover {
   min-height: 250px;
   padding: 1rem;
   display: grid;
-  grid-template-columns: 1fr 1fr 50px;
+  grid-template-columns: auto 1fr auto;
   grid-template-rows: auto 1fr;
   grid-template-areas:
     "menu1 menu2 ."
     "textcontent textcontent check";
   justify-content: center;
   align-items: center;
-  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 5px var(--shadow);
   margin: 2rem;
   transition: transform 0.25s;
-  transform: scale(1) rotate(2deg);
+  transform: scale(1);
+  transform-origin: top center;
 }
 .menu1 {
   grid-area: menu1;
@@ -83,56 +100,68 @@ footer a:hover {
 }
 .text-content {
   grid-area: textcontent;
+  hyphens: auto;
+  overflow-x: hidden;
 }
 .check {
   grid-area: check;
 }
-.todo :first-child {
+.todo > :nth-child(2) {
   opacity: 0;
-  transition: opacity 0.2s;
+  transition: opacity 0.4s;
 }
-.todo:hover :first-child {
+.todo:hover > :nth-child(2) {
   opacity: 1;
 }
 
 .bg-yellow {
-  background-color: yellow;
+  background-color: var(--yellow);
 }
 .bg-blue {
-  background-color: aquamarine;
+  background-color: var(--blue);
 }
 .bg-orange {
-  background-color: darkorange;
+  background-color: var(--orange);
 }
 .bg-red {
-  background-color: tomato;
+  background-color: var(--red);
 }
 .bg-green {
-  background-color: yellowgreen;
+  background-color: var(--green);
 }
 
 .todo:hover {
   transform: scale(1.1) rotate(0deg);
   z-index: 1;
+  box-shadow: 5px 12px 5px var(--shadow);
 }
 
 .todo button {
-  opacity: 0.5;
+  opacity: 0;
+  visibility: collapse;
   cursor: pointer;
-  font-size: 2rem;
+  font-size: 0rem;
   border: none;
   background: none;
   transform: scale(1);
-  transition: transform 0.25s;
+  transition: font-size 0.2s, transform 0.25s;
 }
 .todo button:hover {
-  text-shadow: 0px 0px 12px rgb(0, 0, 0);
-  transform: scale(1.3);
+  text-shadow: 0px 0px 6px var(--shadow);
+  transform: scale(1.2);
+  transition: transform 0.1s;
 }
 .todo:hover button {
   opacity: 1;
+  visibility: visible;
+  font-size: 1.4rem;
 }
-
+.todo form {
+  display: flex;
+  gap: 0.25rem;
+  flex-direction: column;
+  overflow: hidden;
+}
 .menu {
   display: flex;
   flex-direction: row;
@@ -152,6 +181,6 @@ footer a:hover {
 
 .color-picker:hover {
   transform: scale(1.3);
-  box-shadow: 1px 1px 4px black;
+  box-shadow: 1px 1px 4px var(--shadow);
   z-index: 1;
 }

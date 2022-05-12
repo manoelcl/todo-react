@@ -21,8 +21,9 @@ function App() {
     text,
     currentColor = CURRENT_COLOR,
     rotation = createRandomNumber(2),
-    offset = createRandomNumber(12),
+    offset = Math.floor(createRandomNumber(12)),
   }) => {
+    if (!text || text === "") return;
     const newElements = [
       ...todoElements,
       { text, currentColor, rotation, offset },
@@ -32,17 +33,25 @@ function App() {
   };
 
   const deleteTodo = (index) => {
-    todoElements.splice(index, 1);
-    setTodo([...todoElements]);
-    updateLocalStorage(todoElements, CURRENT_COLOR);
+    const newElements = [...todoElements];
+    newElements.splice(index, 1);
+    setTodo(newElements);
+    updateLocalStorage(newElements, CURRENT_COLOR);
   };
 
   const setTodoColor = (index, colorNum) => {
-    console.log(index, colorNum);
-    todoElements[index] = { ...todoElements[index], currentColor: colorNum };
-    setTodo([...todoElements]);
+    const newElements = [...todoElements];
+    newElements[index] = { ...todoElements[index], currentColor: colorNum };
+    setTodo(newElements);
     CURRENT_COLOR = colorNum;
-    updateLocalStorage(todoElements, CURRENT_COLOR);
+    updateLocalStorage(newElements, CURRENT_COLOR);
+  };
+
+  const setTodoText = (index, text) => {
+    const newElements = [...todoElements];
+    newElements[index] = { ...todoElements[index], text: text };
+    setTodo(newElements);
+    updateLocalStorage(newElements, CURRENT_COLOR);
   };
 
   const updateLocalStorage = (elements, currentColor) => {
@@ -62,6 +71,7 @@ function App() {
           colors={COLORS}
           todoHandler={deleteTodo}
           colorHandler={setTodoColor}
+          textHandler={setTodoText}
         />
       </main>
       <footer>
